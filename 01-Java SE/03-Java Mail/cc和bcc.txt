@@ -1,0 +1,9 @@
+
+
+cc是carbon copy的缩写,代表抄送
+
+bcc是blind carbon copy缩写,代表暗送
+
+cc=“抄送”。是传统的“（copy sent to）复制传送”的缩写（早期在打字机时代“cc”代表“副本（carbon copy ）”）。
+
+Bcc=“密件抄送”。是无信头复写副本 (Blind carbon copy) 的缩写。

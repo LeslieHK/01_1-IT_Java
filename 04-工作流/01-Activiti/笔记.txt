@@ -1,0 +1,34 @@
+23张表
+http://blog.csdn.net/rosten/article/details/35220867
+
+模型管理模块
+http://blog.csdn.net/flygoa/article/details/51909659
+
+流程定义
+http://blog.csdn.net/zwk626542417/article/details/46602419
+
+跳转和驳回
+http://blog.csdn.net/wkwanglei/article/details/25811281
+
+
+Activiti任务认领
+TaskService taskService;
+
+taskService.setAssignee(String taskId, String userId);
+taskService.claim(String taskId, String userId);
+taskService.setOwner(String taskId, String userId);
+关于上面三个方法的区别：
+setAssignee和claim两个的区别是在认领任务时，
+claim会检查该任务是否已经被认领，如果被认领则会抛出ActivitiTaskAlreadyClaimedException 
+而setAssignee不会进行这样的检查，其他方面两个方法效果一致。
+
+
+setOwner和setAssignee的区别在于
+setOwner实在代理任务时使用，代表着任务的归属者，而这时，setAssignee代表的时代理办理者，
+ 举个例子来说，公司总经理现在有个任务taskA，去核实一下本年度的财务报表，他现在又很忙没时间，于是将该任务委托给其助理进行办理，此时，就应该这么做：
+taskService.setOwner(taskA.getId(), 总经理.getId());
+taskService.setAssignee/claim(taskA.getId(), 助理.getId());
+
+
+
+setVariables是全局变量，是跟实例绑定，加local是局部变量，跟任务绑定

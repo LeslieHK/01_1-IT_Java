@@ -1,0 +1,74 @@
+o、Spring扫描
+	<!-- activiti事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 加载activiti引擎 -->
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdate" value="true" />
+		<property name="jobExecutorActivate" value="false" />
+	</bean>
+
+	<!-- activiti的各种服务接口 -->
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+
+
+
+
+1、Activiti任务认领
+
+TaskService taskService;
+
+taskService.setAssignee(String taskId, String userId);
+//taskService.claim(String taskId, String userId);
+//taskService.setOwner(String taskId, String userId);
+
+
+
+2、setAssignee、claim和setOwner的区别：
+
+setAssignee和claim两个的区别是在认领任务时，
+claim会检查该任务是否已经被认领，如果被认领则会抛出ActivitiTaskAlreadyClaimedException 
+而setAssignee不会进行这样的检查，其他方面两个方法效果一致。
+
+setOwner和setAssignee的区别在于
+setOwner实在代理任务时使用，代表着任务的归属者，而这时，setAssignee代表的时代理办理者，
+ 举个例子来说，公司总经理现在有个任务taskA，去核实一下本年度的财务报表，他现在又很忙没时间，于是将该任务委托
+给其助理进行办理，此时，就应该这么做：
+taskService.setOwner(taskA.getId(), 总经理.getId());
+taskService.setAssignee/claim(taskA.getId(), 助理.getId());
+
+
+
+3、setVariables是设置全局变量，是跟实例绑定，setLocalVariables是局部变量，跟任务绑定
+
+
+
+4、activiti modeler在线编辑器中文汉化
+4.1 将en.json文件汉化，改名zh-CN.json，放在en.json同目录。
+4.2 在editor-app——app.js中第51行找到
+
+$translateProvider.preferredLanguage('en');  
+改为
+var language = navigator.language;  
+        if("zh-CN" == language){  
+            $translateProvider.preferredLanguage('zh-CN');  
+        }else{  
+            $translateProvider.preferredLanguage('en');  
+        }  
+
+
+
+5、获得ProcessEngine最简单的办法是 使用org.activiti.engine.ProcessEngines类：
+ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine()

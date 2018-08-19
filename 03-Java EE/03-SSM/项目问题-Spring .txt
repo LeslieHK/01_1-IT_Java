@@ -1,0 +1,4 @@
+1、MultipartException: The current request is not a multipart request
+
+不要漏掉enctype="multipart/form-data"，否则web容器认为这不是一个MultipartRequest请求，
+会报错org.springframework.web.multipart.MultipartException: The current request is not a multipart request。

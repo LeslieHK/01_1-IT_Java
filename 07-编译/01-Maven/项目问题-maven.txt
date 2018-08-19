@@ -1,0 +1,14 @@
+1、修改D:\apache-maven-3.2.1\conf 目录下的settings.xml文件
+在<mirrors></mirrors>中添加以下代码：
+
+
+<mirror>  
+    <id>nexus-aliyun</id>  
+    <mirrorOf>central</mirrorOf>    
+    <name>Nexus aliyun</name>  
+    <url>http://maven.aliyun.com/nexus/content/groups/public</url>  
+</mirror> 
+
+
+2、"reload maven project' has encountered a proble" 问题
+需要删除${workspace}\.metadata\.plugins\org.eclipse.e4.workbench\workbench.xmi文件即可。

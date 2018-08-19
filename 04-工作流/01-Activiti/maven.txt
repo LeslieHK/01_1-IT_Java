@@ -1,0 +1,54 @@
+ 修改D:\apache-maven-3.2.1\conf 目录下的settings.xml文件
+在<mirrors></mirrors>中添加以下代码：
+
+
+<mirror>  
+    <id>nexus-aliyun</id>  
+    <mirrorOf>central</mirrorOf>    
+    <name>Nexus aliyun</name>  
+    <url>http://maven.aliyun.com/nexus/content/groups/public</url>  
+</mirror> 
+
+"reload maven project' has encountered a proble" 问题
+标签： reload maven project
+2016-10-22 22:46 1329人阅读 评论(2) 收藏 举报
+由于重重原因，我取消maven的下载（可能是jar包没有公服镜像）。导致重新打开sts 时发生异常。
+
+在网上寻找到资料，发现需要删除${workspace}\.metadata\.plugins\org.eclipse.e4.workbench\workbench.xmi文件即可。
+
+
+
+
+1、
+下载maven的bin，在apache官方网站可以下载。
+maven安装以及eclipse配置maven
+
+2、
+下载下来之后，解压，找个路径放进去， 把bin的位置设在环境变量里，新建环境变量MAVEN_HOME
+maven安装以及eclipse配置maven
+
+3、
+在PATH里加入maven的bin的路径
+maven安装以及eclipse配置maven
+
+4、
+由于Maven依赖Java运行环境，因此使用Maven之前需要配置Java的运行环境。下载并安装JDK，配置JDK的环境变量JAVA_HOME，否则maven将无法使用
+
+5、
+配置完毕后，在Windows命令提示符下，输入mvn -v测试一下，配置成功显示如图：
+maven安装以及eclipse配置maven
+
+6、
+配置成功后开始在Eclipse中配置Maven，点击eclipse菜单栏Help->Eclipse Marketplace搜索关键字maven到插件Maven Integration for Eclipse 并点击安装即可，如下图：
+
+
+7、
+安装完毕后，点击重启eclipse
+maven安装以及eclipse配置maven
+
+8、
+重启后，为了使得Eclipse中安装的Maven插件，同windows中安装的那个相同，需要让eclipse中的maven重新定位一下，点击Window -> Preference -> Maven -> Installation -> Add进行设置
+maven安装以及eclipse配置maven
+
+9、
+设置成功即安装完成。
